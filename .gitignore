@@ -1,0 +1,16 @@
+# Foundry and Solidity
+lib/
+out/
+cache/
+broadcast/
+
+# Local environment
+.env
+foundry.toml
+
+# OS & IDE junk
+.DS_Store
+.vscode/
+.idea/
+*.log
+*.lock
