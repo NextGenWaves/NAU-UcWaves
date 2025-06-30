@@ -29,17 +29,17 @@ We also created 3 UniswapV3 Liquidity Pools on Base:
 
 | Contract Name    | BaseScan Link                                                                               |
 | ---------------- | ------------------------------------------------------------------------------------------- |
-| `NAU`            | [View on BaseScan](https://basescan.org/address/0x1c14d38B2e32C2F7df5176d51bA98027F1069115) |
-| `NAUY`           | [View on BaseScan](https://basescan.org/address/0x45443A1992A744F9955e3d77B9899641DA8AF533) |
-| `NAUN`           | [View on BaseScan](https://basescan.org/address/0x7594cF4177D9eEE56475f61eF0FfCac2f660e122) |
-| `Controller`     | [View on BaseScan](https://basescan.org/address/0xa2f79620BB6c1773657EF4a16DC3B4bf3703A655) |
-| `DevTeamVesting` | [View on BaseScan](https://basescan.org/address/0x7C01Cd4DFd9bE95B8642777d408fA070A5dbb865) |
-| `Staking_NAU`    | [View on BaseScan](https://basescan.org/address/0xbfb3Fe19BcAed06732EeF3ABC4B2742Dc3F2F494) |
-| `Staking_NAUY`   | [View on BaseScan](https://basescan.org/address/0xE470E9CE0Ed62d82BA725f32f5a013Ff4878730E) |
-| `Staking_NAUN`   | [View on BaseScan](https://basescan.org/address/0x1fcf10C4c325f11Fbcba50aDAC0Fd7f2ad659F40) |
-| `NAU/USDC LP`    | [View on BaseScan](https://basescan.org/address/0x8BD48c8C8f99cBe32b117741ca9C074c4A20Cd98) |
-| `NAUY/USDC LP`   | [View on BaseScan](https://basescan.org/address/0x9DB95E2273cb8803Adb25D63E9E4342FF4547c0A) |
-| `NAUN/USDC LP`   | [View on BaseScan](https://basescan.org/address/0x51CB08aa46ABE7F571260eB5BaC7fa4AB7B35e8d) |
+| `NAU`            | [View on BaseScan](https://basescan.org/address/0x1A7F059f6Bc234D1D03075B430e26c67856B53dE) |
+| `NAUY`           | [View on BaseScan](https://basescan.org/address/0x8fE351FD35DDC08bc2f3c5fA573B44d6E13f97ec) |
+| `NAUN`           | [View on BaseScan](https://basescan.org/address/0x885f14Ec5c427767A660174ea0EA8C9953f3549D) |
+| `Controller`     | [View on BaseScan](https://basescan.org/address/0x9c55175284505A184d5e4ab52aA40d68f2253051) |
+| `DevTeamVesting` | [View on BaseScan](https://basescan.org/address/0xD29c16A57462EfE0f51A778C3629303e1849bdFE) |
+| `Staking_NAU`    | [View on BaseScan](https://basescan.org/address/0x399095b87f77eDD8d811cB69B51db81ca889d315) |
+| `Staking_NAUY`   | [View on BaseScan](https://basescan.org/address/0xDb51A363bf304e9A0ef66C29496AE5F8F3ABeDA4) |
+| `Staking_NAUN`   | [View on BaseScan](https://basescan.org/address/0xA2baEcb35ec71EE702Da05a73c8F3F5C4b44F77D) |
+| `NAU/USDC LP`    | [View on BaseScan](https://basescan.org/address/0x0c5E7572D136A745933c4a3a8BA9308Dbd05204E) |
+| `NAUY/USDC LP`   | [View on BaseScan](https://basescan.org/address/0xBc667361E8eBC8fdC3E03e057724Fb20F4D6587E) |
+| `NAUN/USDC LP`   | [View on BaseScan](https://basescan.org/address/0x11B10A4094D6c96154F20eC70810baCf425C4Fb9) |
 
 ## 💡 Key Features
 
