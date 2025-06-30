@@ -28,7 +28,7 @@ contract Controller is AccessControl {
     INAU public nau;
     INAUXMintable public nauy;
     INAUXMintable public naun;
-    address public reserveWallet;
+    address public immutable reserveWallet;
     mapping(address => IUniswapV3Pool) public tokenToPool;
     uint32 public twapInterval;
     uint256 public constant FEE_BASIS_POINTS = 100; // 1% fee
@@ -205,5 +205,10 @@ contract Controller is AccessControl {
         naun.controllerMint(msg.sender, amountNAUN);
 
         emit Transformed(msg.sender, amountNAU, amountNAUY, amountNAUN);
+    }
+
+    // --- Admin Renunciation ---
+    function renounceAdmin() external {
+        renounceRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 }

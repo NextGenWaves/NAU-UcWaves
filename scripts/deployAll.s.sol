@@ -24,7 +24,7 @@ contract DeployAll is Script {
 
     // Vesting Schedule Parameters
     uint256 constant CLIFF_SECONDS = 365 days;
-    uint256 constant VESTING_SECONDS_AFTER_CLIFF = 3 * 365 days;
+    uint256 constant VESTING_SECONDS_AFTER_CLIFF = 2 * 365 days;
 
     function run() external {
         // Get wallet information from environment variables
@@ -91,24 +91,12 @@ contract DeployAll is Script {
         console.log("Staking roles granted to StakingOpsWallet:", stakingOpsWalletAddress);
 
         // --- Set Contract Exclusions ---
-        nau.setIsExcludedFromCooldown(address(nauStaking), true);
-        nauy.setIsExcludedFromCooldown(address(nauyStaking), true);
-        naun.setIsExcludedFromCooldown(address(naunStaking), true);
-        nau.setIsExcludedFromCooldown(controllerAddress, true);
-        nau.setIsExcludedFromCooldown(address(nauStaking), true);
+
         nau.setIsExcludedFromMaxWallet(address(nauStaking), true);
         nau.setIsExcludedFromMaxTx(address(nauStaking), true);
-
         console.log("Excluding Uniswap Universal Router...");
         nau.setIsExcludedFromMaxWallet(UNIVERSAL_ROUTER_ADDRESS, true);
         nau.setIsExcludedFromMaxTx(UNIVERSAL_ROUTER_ADDRESS, true);
-        nau.setIsExcludedFromCooldown(UNIVERSAL_ROUTER_ADDRESS, true);
-        nauy.setIsExcludedFromCooldown(UNIVERSAL_ROUTER_ADDRESS, true);
-        naun.setIsExcludedFromCooldown(UNIVERSAL_ROUTER_ADDRESS, true);
-
-        nauy.setIsExcludedFromCooldown(stakingOpsWalletAddress, true);
-        naun.setIsExcludedFromCooldown(stakingOpsWalletAddress, true);
-
         console.log("Staking contract exclusions set.");
 
         // --- Deploy & Fund Vesting Contract ---
@@ -116,7 +104,7 @@ contract DeployAll is Script {
             address(nau), devBeneficiaryAddress, DEV_VESTING_AMOUNT, CLIFF_SECONDS, VESTING_SECONDS_AFTER_CLIFF
         );
         nau.setIsExcludedFromMaxWallet(address(devVesting), true);
-        nau.setIsExcludedFromCooldown(address(devVesting), true);
+
         nau.transfer(address(devVesting), DEV_VESTING_AMOUNT);
         console.log("Dev Team Vesting contract deployed and funded.");
 

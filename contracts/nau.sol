@@ -8,22 +8,18 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 contract NAU is ERC20, AccessControl {
     // --- Constants ---
     uint256 public constant INITIAL_SUPPLY = 1_000_000_000 * 1e18;
-    uint256 public constant MAX_WALLET_PERCENT = 200; // 2%
-    uint256 public constant MAX_TX_AMOUNT = 5_000_000 * 1e18; // 5M NAU
-    uint256 public constant COOLDOWN_TIME = 60; // 60 seconds
+    uint256 public constant MAX_WALLET_PERCENT = 1300; // 13%
+    uint256 public constant MAX_TX_AMOUNT = 10_000_000 * 1e18; // 10M NAU
     uint256 public constant BASIS_POINTS_DIVISOR = 10000;
 
     // --- Events ---
     event MaxWalletExclusionSet(address indexed account, bool excluded);
-    event CooldownExclusionSet(address indexed account, bool excluded);
     event MaxTxExclusionSet(address indexed account, bool excluded);
     event LpPairSet(address indexed pairAddress, bool isExcluded);
 
     // --- State ---
     mapping(address => bool) public isExcludedFromMaxWallet;
     mapping(address => bool) public isExcludedFromMaxTx;
-    mapping(address => bool) public isExcludedFromCooldown;
-    mapping(address => uint256) public lastTxTimestamp;
     address public lpPair;
 
     // --- Immutable Addresses for Security ---
@@ -58,10 +54,7 @@ contract NAU is ERC20, AccessControl {
         isExcludedFromMaxWallet[admin] = true;
 
         isExcludedFromMaxTx[admin] = true;
-        isExcludedFromCooldown[admin] = true;
-
         isExcludedFromMaxTx[stakingOpsWalletAddress] = true;
-        isExcludedFromCooldown[stakingOpsWalletAddress] = true;
 
         _mint(admin, INITIAL_SUPPLY);
     }
@@ -73,7 +66,6 @@ contract NAU is ERC20, AccessControl {
         lpPair = pairAddress;
 
         isExcludedFromMaxWallet[pairAddress] = excluded;
-        isExcludedFromCooldown[pairAddress] = excluded;
         isExcludedFromMaxTx[pairAddress] = excluded;
 
         emit LpPairSet(pairAddress, excluded);
@@ -86,12 +78,6 @@ contract NAU is ERC20, AccessControl {
         emit MaxWalletExclusionSet(account, excluded);
     }
 
-    function setIsExcludedFromCooldown(address account, bool excluded) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(account != address(0), "NAU: Cannot exclude zero address");
-        isExcludedFromCooldown[account] = excluded;
-        emit CooldownExclusionSet(account, excluded);
-    }
-
     function setIsExcludedFromMaxTx(address account, bool excluded) external onlyRole(DEFAULT_ADMIN_ROLE) {
         require(account != address(0), "NAU: Cannot exclude zero address");
         isExcludedFromMaxTx[account] = excluded;
@@ -101,11 +87,6 @@ contract NAU is ERC20, AccessControl {
     // --- Internal Transfer Logic ---
     function _update(address from, address to, uint256 amount) internal override {
         super._update(from, to, amount);
-
-        if (from != address(0) && !isExcludedFromCooldown[from]) {
-            require(block.timestamp >= lastTxTimestamp[from] + COOLDOWN_TIME, "NAU: Cooldown in effect");
-            lastTxTimestamp[from] = block.timestamp;
-        }
 
         if (from != address(0) && to != address(0) && !isExcludedFromMaxTx[from]) {
             require(amount <= MAX_TX_AMOUNT, "NAU: Transfer exceeds max tx amount");

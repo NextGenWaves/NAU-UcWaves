@@ -6,59 +6,23 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract NAUY is ERC20, AccessControl {
-    // --- Events ---
-    event CooldownExclusionSet(address indexed account, bool excluded);
-
     // --- State ---
     address public immutable controller;
-    uint256 public constant COOLDOWN_TIME = 60; // 60 seconds
-    mapping(address => uint256) public lastTxTimestamp;
-    mapping(address => bool) public isExcludedFromCooldown;
 
     // --- Constructor ---
-    constructor(
-        address admin,
-        address controllerAddress
-    ) ERC20("NAUY", "NAUY") {
+    constructor(address admin, address controllerAddress) ERC20("NAUY", "NAUY") {
         require(admin != address(0), "NAUY: Invalid admin address");
-        require(
-            controllerAddress != address(0),
-            "NAUY: Invalid controller address"
-        );
+        require(controllerAddress != address(0), "NAUY: Invalid controller address");
 
         _grantRole(DEFAULT_ADMIN_ROLE, admin);
         controller = controllerAddress;
-        isExcludedFromCooldown[admin] = true;
 
         _mint(admin, 15_000_000 * 1e18);
     }
 
-    // --- Admin-only Exclusion Function ---
-    function setIsExcludedFromCooldown(
-        address account,
-        bool excluded
-    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(account != address(0), "NAUY: Cannot exclude the zero address");
-        isExcludedFromCooldown[account] = excluded;
-        emit CooldownExclusionSet(account, excluded);
-    }
-
     // --- Internal Transfer Logic ---
-    function _update(
-        address from,
-        address to,
-        uint256 amount
-    ) internal override {
+    function _update(address from, address to, uint256 amount) internal override {
         super._update(from, to, amount);
-
-        // Cooldown check applies to transfers from regular user accounts
-        if (from != address(0) && !isExcludedFromCooldown[from]) {
-            require(
-                block.timestamp >= lastTxTimestamp[from] + COOLDOWN_TIME,
-                "NAUY: Cooldown in effect"
-            );
-            lastTxTimestamp[from] = block.timestamp;
-        }
     }
 
     // --- SECURE Mint Function ---
